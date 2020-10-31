@@ -1,8 +1,9 @@
 import {Server} from './app/server/server'
+import {usersRouter} from "./app/users/users.router";
 
 const server = new Server()
 
-server.bootstrap()
+server.bootstrap([usersRouter])
     .then(server => {
 
         console.log('Server is listening on:', server.application.address())
