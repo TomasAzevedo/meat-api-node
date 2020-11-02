@@ -1,18 +1,20 @@
 {
   "name": "meat-node-api",
   "version": "1.0.0",
-  "description": "API de restaurante.",
+  "description": "API de restaurante. Aplicação baseada no curso da Udemy de Tarso Bessa (Do Zero à Nuvem: API Restful com NodeJS, Restify e MongoDB).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Tomas Azevedo",
   "license": "ISC",
   "dependencies": {
+    "mongoose": "5.10.11",
     "restify": "^8.5.1"
   },
   "devDependencies": {
+    "@types/mongoose": "5.7.37",
     "@types/restify": "^8.4.2"
   }
 }

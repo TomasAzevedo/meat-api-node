@@ -19,9 +19,10 @@ class UsersRouter extends Router {
          */
         application.get('/users', (req, resp, next) => {
 
-            User.findAll().then(users => {
+            User.find().then(users => {
 
                 resp.json(users)
+                console.log('asaaa')
                 return next()
 
             })
@@ -44,6 +45,26 @@ class UsersRouter extends Router {
                 }
 
                 resp.send(404)
+                return next()
+
+            })
+
+        })
+
+
+        /**
+         *
+         * Método POST - /users
+         *
+         */
+        application.post('/users', (req, resp, next) => {
+
+            let user = new User(req.body)
+
+            user.save().then(user => {
+
+                user.password = undefined
+                resp.json(user)
                 return next()
 
             })
