@@ -4,9 +4,6 @@ import {environment} from "../common/environment";
 import * as bcrypt from "bcrypt"
 
 
-
-
-
 export interface User extends mongoose.Document {
     name: string,
     email: string,
@@ -16,7 +13,9 @@ export interface User extends mongoose.Document {
 }
 
 
-
+export interface UserModel extends mongoose.Model<User> {
+    findByEmail(email: string): Promise<User>
+}
 
 
 const userSchema = new mongoose.Schema({
@@ -53,7 +52,9 @@ const userSchema = new mongoose.Schema({
 })
 
 
-
+userSchema.statics.findByEmail = function(email: string){
+    return this.findOne({email}) //{email: email}
+}
 
 
 const hashPassword = (obj, next) => {
@@ -64,6 +65,7 @@ const hashPassword = (obj, next) => {
         }).catch(next)
 }
 
+
 const saveMiddleware = function (next) {
     const user: User = this
     if (!user.isModified('password')) {
@@ -73,6 +75,7 @@ const saveMiddleware = function (next) {
     }
 }
 
+
 const updateMiddleware = function (next) {
     if (!this.getUpdate().password) {
         next()
@@ -81,12 +84,10 @@ const updateMiddleware = function (next) {
     }
 }
 
+
 userSchema.pre('save', saveMiddleware)
 userSchema.pre('findOneAndUpdate', updateMiddleware)
 userSchema.pre('update', updateMiddleware)
 
 
-
-
-
-export const User = mongoose.model<User>('User', userSchema)
+export const User = mongoose.model<User, UserModel>('User', userSchema)
