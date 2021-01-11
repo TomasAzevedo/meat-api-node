@@ -13,3 +13,9 @@ nodemon dist/main.js
 mongod
 ```
 
+## Para rodar os testes
+
+```bash
+npm test
+```
+
