@@ -10,7 +10,8 @@ export class Server {
 
     application: restify.Server
 
-    initializeDb(): mongoose.MongooseThenable {
+
+    initializeDb() {
 
         (<any>mongoose).Promise = global.Promise
 
@@ -20,6 +21,7 @@ export class Server {
         })
 
     }
+
 
     initRoutes(routers: Router[]): Promise<any> {
 
@@ -54,11 +56,14 @@ export class Server {
         })
     }
 
+
     bootstrap(routers: Router[] = []): Promise<Server> {
+        return this.initializeDb().then(() =>
+            this.initRoutes(routers).then(() => this))
+    }
 
-        return this.initializeDb().then(()=>
-               this.initRoutes(routers).then(()=> this))
-
+    shutdown() {
+        return mongoose.disconnect().then(() => this.application.close())
     }
 
 }
