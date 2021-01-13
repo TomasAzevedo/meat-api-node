@@ -28,7 +28,7 @@ export abstract class Router extends EventEmitter {
                 response.send(404)
             }
 
-            return next()
+            return next(false)
 
         }
 
@@ -52,7 +52,7 @@ export abstract class Router extends EventEmitter {
 
             }
 
-            return next()
+            return next(false)
 
         }
 
